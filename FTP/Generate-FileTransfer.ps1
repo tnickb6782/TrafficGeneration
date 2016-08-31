@@ -1,4 +1,6 @@
-﻿Expand-Archive C:\Scripts\PSFTP.zip -DestinationPath C:\Windows\System32\WindowsPowerShell\v1.0\Modules
+﻿# Generate FTP Traffic to two FTP servers.  
+# PSFTP module package must be added to Powershell directory before running.  Included in Admin-Tasks.ps1.
+# FTP server information must be changed in script before running.
 
 Import-Module PSFTP
 
@@ -14,10 +16,8 @@ $date = Get-Date -Format MM-dd-yyyy
 
 #Create directory list of files in External FTP server
 foreach ($file in $files) {
-    if ($file.Name -like "*.zip") {
-        $file.name >> C:\Scripts\FTP\ExternalFilelist-$date.txt
+    $file.name >> C:\Scripts\FTP\ExternalFilelist-$date.txt
     }
-}
 
 #Setup session with External FTP server
 Set-FTPConnection -Credentials $FTPcred -Server #InternalServer -Session MyTestSession -UsePassive 
@@ -26,9 +26,7 @@ $files = Get-FTPChildItem -Session $Session -Path / -Recurse -Depth 2
 
 #Create directory list of files in External FTP server
 foreach ($file in $files) {
-    if ($file.Name -like "*.zip") {
-        $file.name >> C:\Scripts\FTP\InternalFilelist-$date.txt
-    }
+    $file.name >> C:\Scripts\FTP\InternalFilelist-$date.txt
 }
 
 
