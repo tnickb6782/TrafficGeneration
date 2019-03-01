@@ -1,5 +1,6 @@
-﻿
-$Users = Import-Csv -Path "C:\Userlist.csv"            
+﻿# Simple script to create batches of users in a domain.
+# The csv file must have columns specified as "Firstname", "Lastname", "OU", "Description", and "Password" (randomly generated of course). 
+$Users = Import-Csv -Path (Read-Host "Input file path of user list")            
 foreach ($User in $Users)            
 {            
     $Displayname = $User.Firstname + " " + $User.Lastname            
@@ -7,7 +8,7 @@ foreach ($User in $Users)
     $UserLastname = $User.Lastname            
     $OU = "$User.OU"            
     $SAM = $User.Firstname + "." + $User.Lastname           
-    $UPN = $User.Firstname + "." + $User.Lastname + "@cybertropolis.city.nw"            
+    $UPN = $User.Firstname + "." + $User.Lastname + "@domain.com" #change domain as appropriate            
     $Description = $User.Description            
     $Password = $User.Password            
     New-ADUser -Name "$Displayname" -DisplayName "$Displayname" -SamAccountName $SAM `
